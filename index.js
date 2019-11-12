@@ -1,8 +1,26 @@
+const fs = require('fs');
+
+// Returns the path to the word list which is separated by `\n`
+const wordListPath = require('word-list');
+
+const ArrayOfWords = fs.readFileSync(wordListPath, 'utf8').split('\n');
+
+const rand = Math.random()
+const randWordIndex = Math.floor(rand * ArrayOfWords.length + 1)
+console.log(rand)
+const word = ArrayOfWords[randWordIndex]
+console.log(ArrayOfWords[1899])
+let guesses = []
+const readline = require('readline')
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
+
+// play the game
+next(word, guesses)
+
+
 function wrongGuessCount(word, guesses) {
     return guesses.filter(letter => !word.includes(letter)).length
 }
-
-// console.log('wrong guesses: ', wrongGuessCount('hello', ['e', 'd', 'x', 'o']), 'should be:', 2)
 
 function showGuess(word, guesses) {
     const wordArray = Array.from(word) // or word.split('')
@@ -15,8 +33,6 @@ function showGuess(word, guesses) {
     })
     return answerArray.join(' ')
 }
-// console.log('show guess 1:', showGuess('hello', ['l']), 'should be:', '_ _ l l _')
-// console.log('show guess 2:', showGuess('hello', ['l', 'a', 'e']), 'should be:', '_ e l l _')
 
 function isWinner(word, guesses) {
     const wordArray = Array.from(word)
@@ -51,18 +67,12 @@ function drawHanger(wrongGuesses) {
     }
 }
 
-// console.log('winner 1:', isWinner('hello', ['e', 'x']), 'should be:', false)
-// console.log('winner 2:', isWinner('hello', ['o', 'l', 'e', 'h']), 'should be:', true)
-
-const word = "love"
-let guesses = []
-const readline = require('readline')
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-
 function next(word, guesses) {
     if (guesses.length > 0 && wrongGuessCount(word, guesses) > 0) {
         console.log(drawHanger(wrongGuessCount(word, guesses)))
     }
+    console.log("The word:")
+    console.log(showGuess(word, guesses))
     // check if lost
     if (wrongGuessCount(word, guesses) >= 6) {
         console.log("Player lost") // how can I exit the game?
@@ -100,4 +110,3 @@ function next(word, guesses) {
         })
     }
 }
-next(word, guesses)
