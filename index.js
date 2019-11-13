@@ -7,9 +7,7 @@ const ArrayOfWords = fs.readFileSync(wordListPath, 'utf8').split('\n');
 
 const rand = Math.random()
 const randWordIndex = Math.floor(rand * ArrayOfWords.length + 1)
-console.log(rand)
 const word = ArrayOfWords[randWordIndex]
-console.log(ArrayOfWords[1899])
 let guesses = []
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
